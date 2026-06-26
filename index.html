@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Residencial Bem Querer | Cuidado e Acolhimento para a Melhor Idade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --p:     #8B6EC8;   /* purple accent          */
+      --p-dk:  #6B50A8;   /* purple hover            */
+      --p-bg:  #F5F2FB;   /* ultralight purple tint  */
+      --p-bdr: #E2DAF5;   /* purple-tinted border    */
+
+      --ink:   #1A1A22;
+      --mid:   #52525C;
+      --muted: #8A8A96;
+      --line:  #EBEBED;
+
+      --white: #FFFFFF;
+      --off:   #FAFAFA;
+
+      --sans:  'Jost', system-ui, sans-serif;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+
+      --r: 10px;
+      --t: .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Reveal ── */
+    .up { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+    .up.in { opacity: 1; transform: none; }
+    .up.d1 { transition-delay: .06s; } .up.d2 { transition-delay: .12s; }
+    .up.d3 { transition-delay: .18s; } .up.d4 { transition-delay: .24s; }
+    .up.d5 { transition-delay: .30s; } .up.d6 { transition-delay: .36s; }
+
+    /* ════════════ HEADER ════════════ */
+    #hdr {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      background: rgba(255,255,255,.92); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+      padding: 0;
+      transition: box-shadow var(--t);
+    }
+    #hdr.on { box-shadow: 0 1px 16px rgba(0,0,0,.06); }
+
+    .hdr-inner {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      height: 64px; gap: 16px;
+    }
+
+    .hdr-logo img { height: 44px; width: auto; object-fit: contain; }
+
+    .hdr-nav { display: none; }
+    @media (min-width: 860px) { .hdr-nav { display: flex; align-items: center; gap: 2px; } }
+
+    .hdr-nav a {
+      font-size: .8rem; font-weight: 500; color: var(--mid);
+      padding: 6px 12px; border-radius: 6px; transition: all var(--t);
+      letter-spacing: .01em;
+    }
+    .hdr-nav a:hover { color: var(--p); background: var(--p-bg); }
+
+    .hdr-wpp {
+      display: none; align-items: center; gap: 7px;
+      background: var(--p); color: var(--white);
+      padding: 8px 16px; border-radius: 50px;
+      font-size: .78rem; font-weight: 600;
+      transition: all var(--t);
+    }
+    @media (min-width: 860px) { .hdr-wpp { display: flex; } }
+    .hdr-wpp:hover { background: var(--p-dk); }
+
+    .hdr-burger { display: flex; flex-direction: column; gap: 4px; cursor: pointer; background: none; border: none; padding: 6px; }
+    @media (min-width: 860px) { .hdr-burger { display: none; } }
+    .hdr-burger span { display: block; width: 20px; height: 1.5px; background: var(--ink); border-radius: 2px; transition: var(--t); }
+
+    /* Mobile menu */
+    .mob { display: none; position: fixed; inset: 0; z-index: 850; background: var(--white); flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+    .mob.open { display: flex; }
+    .mob a { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; color: var(--ink); transition: color var(--t); }
+    .mob a:hover { color: var(--p); }
+    .mob-close { position: absolute; top: 18px; right: 20px; background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--muted); }
+    .mob-wpp {
+      font-family: var(--sans) !important; font-size: .9rem !important; font-weight: 600 !important;
+      background: var(--p) !important; color: var(--white) !important;
+      padding: 12px 28px !important; border-radius: 50px; margin-top: 8px;
+    }
+
+    /* ════════════ HERO ════════════ */
+    #hero {
+      padding: 120px 0 80px;
+      background: var(--white);
+    }
+    @media (min-width: 860px) { #hero { padding: 140px 0 100px; } }
+
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr;
+      gap: 48px; align-items: center;
+    }
+    @media (min-width: 860px) { .hero-grid { grid-template-columns: 1fr 1fr; gap: 72px; } }
+
+    .hero-eyebrow {
+      font-size: .68rem; font-weight: 600; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--p);
+      display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+    }
+    .hero-eyebrow::before { content: ''; width: 18px; height: 1px; background: var(--p); }
+
+    .hero-h1 {
+      font-family: var(--serif); font-weight: 300;
+      font-size: clamp(2.6rem, 5.5vw, 4rem);
+      line-height: 1.12; color: var(--ink); margin-bottom: 20px;
+    }
+    .hero-h1 em { font-style: italic; color: var(--p); font-weight: 300; }
+
+    .hero-sub {
+      font-size: .93rem; font-weight: 300; line-height: 1.8;
+      color: var(--mid); margin-bottom: 32px; max-width: 400px;
+    }
+
+    .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 50px; font-family: var(--sans);
+      font-size: .82rem; font-weight: 600; cursor: pointer; border: none;
+      transition: all var(--t); white-space: nowrap;
+    }
+    .btn-p { background: var(--p); color: var(--white); }
+    .btn-p:hover { background: var(--p-dk); transform: translateY(-1px); }
+    .btn-wpp { background: #22C55E; color: var(--white); }
+    .btn-wpp:hover { background: #16A34A; transform: translateY(-1px); }
+    .btn-ol { background: transparent; color: var(--mid); border: 1px solid var(--line); }
+    .btn-ol:hover { border-color: var(--p-bdr); color: var(--p); }
+    .btn-wpp-ol { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.5); }
+    .btn-wpp-ol:hover { background: rgba(255,255,255,.1); }
+
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 44px;
+      padding-top: 32px; border-top: 1px solid var(--line);
+    }
+    .hs-n { font-family: var(--serif); font-size: 2rem; font-weight: 400; display: block; color: var(--ink); line-height: 1; }
+    .hs-l { font-size: .68rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: block; margin-top: 5px; }
+
+    /* Hero image */
+    .hero-img {
+      width: 100%; aspect-ratio: 4/5;
+      border-radius: 16px;
+      background: var(--p-bg);
+      border: 1px solid var(--p-bdr);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 10px; color: var(--p-bdr);
+    }
+    .hero-img i { font-size: 2rem; opacity: .6; color: var(--p); opacity: .3; }
+    .hero-img span { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+    /* ════════════ DIVIDER ════════════ */
+    .divider { height: 1px; background: var(--line); }
+
+    /* ════════════ TRUST ════════════ */
+    #trust { background: var(--white); }
+
+    .trust-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--line); border-left: 1px solid var(--line);
+    }
+    @media (min-width: 640px) { .trust-row { grid-template-columns: repeat(4, 1fr); } }
+
+    .trust-item {
+      padding: 28px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ti-ico { font-size: .9rem; color: var(--p); width: 18px; text-align: center; flex-shrink: 0; }
+    .ti-t strong { display: block; font-size: .83rem; font-weight: 600; color: var(--ink); }
+    .ti-t span { font-size: .72rem; color: var(--muted); }
+
+    /* ════════════ SECTIONS ════════════ */
+    .sec { padding: 80px 0; }
+    @media (min-width: 768px) { .sec { padding: 100px 0; } }
+    .sec-alt { background: var(--p-bg); }
+
+    .sec-hdr { margin-bottom: 48px; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: .65rem; font-weight: 600; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--p); margin-bottom: 12px;
+    }
+    .eyebrow::before { content: ''; width: 16px; height: 1px; background: var(--p); }
+
+    h2 {
+      font-family: var(--serif); font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 400; line-height: 1.15; color: var(--ink);
+    }
+    h2 em { font-style: italic; color: var(--p); }
+
+    .sub { font-size: .93rem; font-weight: 300; color: var(--mid); line-height: 1.75; }
+
+    /* ════════════ SOBRE ════════════ */
+    .sobre-grid {
+      display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center;
+    }
+    @media (min-width: 768px) { .sobre-grid { grid-template-columns: 1fr 1fr; gap: 72px; } }
+
+    .sobre-img-box {
+      width: 100%; aspect-ratio: 4/5;
+      background: var(--p-bg); border: 1px solid var(--p-bdr);
+      border-radius: 16px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px;
+    }
+    .sobre-img-box i { font-size: 1.8rem; color: var(--p); opacity: .25; }
+    .sobre-img-box span { font-size: .65rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+    .sobre-text h2 { margin-bottom: 18px; }
+    .sobre-text .sub { margin-bottom: 14px; }
+
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .72rem; font-weight: 500; color: var(--p);
+      background: var(--p-bg); border: 1px solid var(--p-bdr);
+      padding: 6px 12px; border-radius: 50px;
+    }
+
+    /* ════════════ SERVIÇOS ════════════ */
+    .svc-list { border-top: 1px solid var(--line); }
+    .svc-row {
+      display: grid; grid-template-columns: 40px 1fr;
+      gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--line);
+      transition: var(--t);
+    }
+    @media (min-width: 640px) { .svc-row { grid-template-columns: 56px 1fr auto; gap: 28px; align-items: center; } }
+    .svc-row:hover { padding-left: 8px; }
+
+    .svc-n { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--p-bdr); line-height: 1; }
+    .svc-row h3 { font-family: var(--serif); font-size: 1.25rem; font-weight: 400; margin-bottom: 6px; color: var(--ink); }
+    .svc-row p { font-size: .85rem; line-height: 1.7; color: var(--mid); font-weight: 300; max-width: 480px; }
+    .svc-tag {
+      display: none; align-items: center; gap: 5px;
+      font-size: .68rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--p); background: var(--p-bg); border: 1px solid var(--p-bdr);
+      padding: 6px 12px; border-radius: 50px; white-space: nowrap;
+    }
+    @media (min-width: 640px) { .svc-tag { display: flex; } }
+
+    /* ════════════ EQUIPE ════════════ */
+    .cat-hdr {
+      font-size: .62rem; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--muted);
+      display: flex; align-items: center; gap: 12px; margin-bottom: 12px; margin-top: 36px;
+    }
+    .cat-hdr::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .cat-hdr:first-child { margin-top: 0; }
+
+    .team-grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    @media (min-width: 560px) { .team-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 860px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
+    .team-grid.g2 { }
+    @media (min-width: 860px) { .team-grid.g2 { grid-template-columns: 1fr 1fr; } }
+
+    .tc {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px; border-radius: var(--r);
+      border: 1px solid var(--line); transition: var(--t);
+    }
+    .tc:hover { border-color: var(--p-bdr); background: var(--p-bg); }
+    .tc-ico {
+      width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: .85rem;
+      background: var(--p-bg); color: var(--p);
+    }
+    .tc-n { font-size: .85rem; font-weight: 600; color: var(--ink); }
+    .tc-r { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+
+    /* ════════════ DIFERENCIAIS ════════════ */
+    .dif-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    @media (min-width: 768px) { .dif-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .dif-item { background: var(--white); padding: 28px 24px; transition: background var(--t); }
+    .dif-item:hover { background: var(--p-bg); }
+    .dif-ico { font-size: .9rem; color: var(--p); margin-bottom: 14px; }
+    .dif-item h4 { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 6px; }
+    .dif-item p { font-size: .8rem; color: var(--mid); line-height: 1.65; font-weight: 300; }
+
+    /* ════════════ GALERIA ════════════ */
+    .gal-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 640px) {
+      .gal-grid {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: 220px 220px;
+      }
+      .gal-grid .gi:nth-child(1) { grid-column: 1/6;  grid-row: 1/3; }
+      .gal-grid .gi:nth-child(2) { grid-column: 6/9;  grid-row: 1/2; }
+      .gal-grid .gi:nth-child(3) { grid-column: 9/13; grid-row: 1/2; }
+      .gal-grid .gi:nth-child(4) { grid-column: 6/10; grid-row: 2/3; }
+      .gal-grid .gi:nth-child(5) { grid-column: 10/13;grid-row: 2/3; }
+    }
+    @media (max-width: 639px) { .gal-grid .gi:nth-child(1) { grid-column: 1/-1; } }
+
+    .gi { border-radius: 10px; overflow: hidden; }
+    .gi-ph {
+      width: 100%; height: 100%; min-height: 150px;
+      background: var(--p-bg); border: 1px solid var(--p-bdr);
+      border-radius: 10px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 8px; color: var(--muted); transition: var(--t);
+    }
+    .gi-ph:hover { background: var(--p-bdr); }
+    .gi-ph i { font-size: 1.3rem; opacity: .4; }
+    .gi-ph span { font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; }
+
+    /* ════════════ CTA BAND ════════════ */
+    #cta { background: var(--p); padding: 72px 0; text-align: center; }
+    .cta-eyebrow { color: rgba(255,255,255,.55); font-size: .65rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 9px; margin-bottom: 16px; }
+    .cta-eyebrow::before { content: ''; width: 16px; height: 1px; background: rgba(255,255,255,.4); }
+    #cta h2 { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 300; color: var(--white); margin-bottom: 12px; }
+    #cta h2 em { color: rgba(255,255,255,.6); }
+    #cta p { font-size: .88rem; color: rgba(255,255,255,.6); font-weight: 300; margin-bottom: 32px; }
+    .cta-btns { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+    /* ════════════ DEPOIMENTOS ════════════ */
+    .dep-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    @media (min-width: 560px) { .dep-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 860px) { .dep-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .dep-card {
+      background: var(--white); border: 1px solid var(--line);
+      border-radius: var(--r); padding: 24px; transition: var(--t);
+    }
+    .dep-card:hover { border-color: var(--p-bdr); }
+    .dep-stars { color: var(--p); font-size: .72rem; letter-spacing: .08em; margin-bottom: 12px; opacity: .7; }
+    .dep-q { font-family: var(--serif); font-size: 3rem; line-height: .5; color: var(--p-bdr); margin-bottom: 12px; display: block; }
+    .dep-card p { font-family: var(--serif); font-style: italic; font-size: .98rem; font-weight: 300; color: var(--mid); line-height: 1.6; margin-bottom: 20px; }
+    .dep-author { display: flex; align-items: center; gap: 10px; }
+    .dep-av { width: 32px; height: 32px; border-radius: 50%; background: var(--p-bg); color: var(--p); display: flex; align-items: center; justify-content: center; font-size: .8rem; flex-shrink: 0; }
+    .dep-nm strong { font-size: .8rem; font-weight: 600; display: block; }
+    .dep-nm span { font-size: .7rem; color: var(--muted); }
+
+    /* ════════════ CONTATO ════════════ */
+    .contato-grid { display: grid; grid-template-columns: 1fr; gap: 40px; }
+    @media (min-width: 768px) { .contato-grid { grid-template-columns: 1fr 1.3fr; gap: 60px; align-items: start; } }
+
+    .c-hdr h2 { margin-bottom: 12px; }
+    .c-hdr .sub { margin-bottom: 28px; }
+
+    .c-list { display: flex; flex-direction: column; gap: 8px; }
+    .c-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px; border-radius: var(--r);
+      border: 1px solid var(--line); transition: var(--t);
+    }
+    .c-row:hover { border-color: var(--p-bdr); background: var(--p-bg); }
+    .c-ico { width: 36px; height: 36px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: .85rem; color: var(--white); }
+    .ci-p { background: var(--p); }
+    .ci-g { background: #22C55E; }
+    .c-lbl { font-size: .62rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; color: var(--p); display: block; margin-bottom: 1px; }
+    .c-val { font-size: .85rem; color: var(--ink); }
+
+    .map-box { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); height: 380px; }
+    @media (min-width: 768px) { .map-box { height: 440px; } }
+    .map-box iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ════════════ FOOTER ════════════ */
+    #footer { background: var(--ink); padding: 56px 0 24px; }
+
+    .ft-grid { display: grid; grid-template-columns: 1fr; gap: 36px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 20px; }
+    @media (min-width: 640px) { .ft-grid { grid-template-columns: 1.3fr 1fr 1fr; gap: 48px; } }
+
+    .ft-logo img { height: 42px; width: auto; margin-bottom: 12px; filter: brightness(10) saturate(0); opacity: .45; }
+    .ft-logo p { font-size: .78rem; color: rgba(255,255,255,.35); line-height: 1.7; max-width: 260px; }
+
+    .ft-socials { display: flex; gap: 8px; margin-top: 18px; }
+    .ft-soc { width: 30px; height: 30px; border-radius: 6px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.4); font-size: .8rem; transition: var(--t); }
+    .ft-soc:hover { background: var(--p); border-color: var(--p); color: var(--white); }
+
+    .ft-col h5 { font-family: var(--serif); color: rgba(255,255,255,.7); font-size: .88rem; font-weight: 400; margin-bottom: 14px; }
+    .ft-links { display: flex; flex-direction: column; gap: 8px; }
+    .ft-links a { font-size: .76rem; color: rgba(255,255,255,.32); transition: color .2s; }
+    .ft-links a:hover { color: rgba(255,255,255,.65); }
+    .ft-info { font-size: .76rem; color: rgba(255,255,255,.32); display: flex; gap: 8px; margin-bottom: 9px; }
+    .ft-info i { color: var(--p); opacity: .7; margin-top: 2px; flex-shrink: 0; width: 12px; font-size: .7rem; }
+
+    .ft-bot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: .68rem; color: rgba(255,255,255,.2); }
+
+    /* ════════════ FLOAT WPP ════════════ */
+    .wpp {
+      position: fixed; bottom: 20px; right: 20px; z-index: 800;
+      background: #22C55E; color: var(--white); border-radius: 50px;
+      padding: 12px 18px; display: flex; align-items: center; gap: 7px;
+      font-size: .8rem; font-weight: 600;
+      box-shadow: 0 4px 20px rgba(34,197,94,.3);
+      transition: all var(--t);
+    }
+    .wpp i { font-size: 1.1rem; }
+    .wpp span { display: none; }
+    @media (min-width: 560px) { .wpp span { display: inline; } }
+    .wpp:hover { background: #16A34A; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="hdr">
+  <div class="wrap hdr-inner">
+    <a href="#" class="hdr-logo">
+      <img src="https://residencialbemquerer.com.br/wp-content/uploads/2021/02/asasasasas.png" alt="Residencial Bem Querer" />
+    </a>
+    <nav class="hdr-nav">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#equipe">Equipe</a>
+      <a href="#galeria">Estrutura</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a href="https://wa.me/5562983410308" class="hdr-wpp" target="_blank">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <button class="hdr-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE MENU -->
+<div class="mob" id="mob">
+  <button class="mob-close" id="mobClose"><i class="fas fa-times"></i></button>
+  <a href="#sobre"    onclick="closeMob()">Sobre</a>
+  <a href="#servicos" onclick="closeMob()">Serviços</a>
+  <a href="#equipe"   onclick="closeMob()">Equipe</a>
+  <a href="#galeria"  onclick="closeMob()">Estrutura</a>
+  <a href="#contato"  onclick="closeMob()">Contato</a>
+  <a href="https://wa.me/5562983410308" class="mob-wpp" target="_blank">
+    <i class="fab fa-whatsapp"></i> WhatsApp
+  </a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">Residencial para a Melhor Idade</div>
+        <h1 class="hero-h1">
+          Cuidado e carinho<br/>
+          <em>para quem você ama</em>
+        </h1>
+        <p class="hero-sub">Um espaço acolhedor, seguro e profissional onde cada idoso recebe atenção especializada — e cada família vive com tranquilidade.</p>
+        <div class="hero-btns">
+          <a href="https://wa.me/5562983410308?text=Olá!%20Gostaria%20de%20agendar%20uma%20visita." class="btn btn-wpp" target="_blank">
+            <i class="fab fa-whatsapp"></i> Agendar visita
+          </a>
+          <a href="#sobre" class="btn btn-ol">Saiba mais</a>
+        </div>
+        <div class="hero-stats">
+          <div><span class="hs-n">7+</span><span class="hs-l">Anos</span></div>
+          <div><span class="hs-n">7</span><span class="hs-l">Especialidades</span></div>
+          <div><span class="hs-n">24h</span><span class="hs-l">Atendimento</span></div>
+        </div>
+      </div>
+      <div class="hero-img up d2">
+        <i class="fas fa-camera"></i>
+        <span>Foto principal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section id="trust">
+  <div class="wrap">
+    <div class="trust-row">
+      <div class="trust-item up">
+        <div class="ti-ico"><i class="fas fa-user-doctor"></i></div>
+        <div class="ti-t"><strong>Equipe médica</strong><span>Acompanhamento completo</span></div>
+      </div>
+      <div class="trust-item up d1">
+        <div class="ti-ico"><i class="fas fa-shield-heart"></i></div>
+        <div class="ti-t"><strong>Ambiente seguro</strong><span>Estrutura adaptada</span></div>
+      </div>
+      <div class="trust-item up d2">
+        <div class="ti-ico"><i class="fas fa-comments"></i></div>
+        <div class="ti-t"><strong>Família informada</strong><span>Comunicação contínua</span></div>
+      </div>
+      <div class="trust-item up d3" style="border-right:1px solid var(--line)">
+        <div class="ti-ico"><i class="fas fa-clock"></i></div>
+        <div class="ti-t"><strong>Atendimento 24h</strong><span>Suporte ininterrupto</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="sec">
+  <div class="wrap">
+    <div class="sobre-grid">
+      <div class="up">
+        <div class="sobre-img-box">
+          <i class="fas fa-camera"></i>
+          <span>Foto da estrutura</span>
+        </div>
+      </div>
+      <div class="sobre-text up d2">
+        <div class="eyebrow">Sobre Nós</div>
+        <h2>Um lar com <em>propósito e afeto</em></h2>
+        <p class="sub" style="margin-top:16px;">O Residencial Bem Querer nasceu com um único propósito: oferecer aos idosos um espaço onde se sintam verdadeiramente em casa — com segurança, conforto e atenção que merecem.</p>
+        <p class="sub" style="margin-top:12px;">Nossa equipe multidisciplinar trabalha de forma integrada para garantir bem-estar físico, emocional e social, mantendo sua família informada em cada etapa.</p>
+        <div class="pills">
+          <span class="pill"><i class="fas fa-calendar-check" style="font-size:.65rem"></i> Desde 2019</span>
+          <span class="pill"><i class="fas fa-user-doctor" style="font-size:.65rem"></i> Equipe completa</span>
+          <span class="pill"><i class="fas fa-house-heart" style="font-size:.65rem"></i> Ambiente familiar</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="sec sec-alt">
+  <div class="wrap">
+    <div class="sec-hdr up">
+      <div class="eyebrow">Modalidades</div>
+      <h2 style="margin-top:10px;">Como podemos <em>ajudar</em></h2>
+    </div>
+    <div class="svc-list">
+      <div class="svc-row up d1">
+        <div class="svc-n">01</div>
+        <div>
+          <h3>Hospedagem Permanente</h3>
+          <p>Para idosos que desejam morar em um ambiente seguro, acolhedor e preparado para proporcionar qualidade de vida em todas as fases do envelhecimento. Inclui assistência de enfermagem 24h, acompanhamento com médico geriatra, nutrição, terapias, lavanderia e enxoval fornecido pela instituição.</p>
+        </div>
+        <div class="svc-tag">Longa permanência</div>
+      </div>
+      <div class="svc-row up d2">
+        <div class="svc-n">02</div>
+        <div>
+          <h3>Hospedagem Temporária</h3>
+          <p>Ideal para famílias que necessitam de cuidados especializados por período determinado — durante viagens, compromissos ou recuperação pós-cirúrgica. O idoso recebe os mesmos cuidados e atividades da hospedagem permanente.</p>
+        </div>
+        <div class="svc-tag">Curta e média permanência</div>
+      </div>
+      <div class="svc-row up d3">
+        <div class="svc-n">03</div>
+        <div>
+          <h3>Centro Dia</h3>
+          <p>O idoso passa o dia em um ambiente humanizado, participando de terapias e atividades que estimulam a saúde física, emocional, cognitiva e social — e retorna para casa à noite.</p>
+          <p style="margin-top:8px;font-size:.8rem;color:var(--p);font-weight:500;">
+            <i class="fas fa-clock" style="margin-right:5px;"></i>Entrada: 07h–08h &nbsp;·&nbsp; Saída: 18h30–19h30
+          </p>
+        </div>
+        <div class="svc-tag">Retorno noturno</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE -->
+<section id="equipe" class="sec">
+  <div class="wrap">
+    <div class="sec-hdr up">
+      <div class="eyebrow">Nossa Equipe</div>
+      <h2 style="margin-top:10px;">Profissionais <em>dedicados ao seu cuidado</em></h2>
+    </div>
+
+    <div class="cat-hdr up d1">Saúde Médica</div>
+    <div class="team-grid up d1">
+      <div class="tc"><div class="tc-ico"><i class="fas fa-user-doctor"></i></div><div><div class="tc-n">Médico Geriatra</div><div class="tc-r">Acompanhamento clínico especializado</div></div></div>
+      <div class="tc"><div class="tc-ico"><i class="fas fa-syringe"></i></div><div><div class="tc-n">Técnico de Enfermagem</div><div class="tc-r">Assistência 24 horas</div></div></div>
+      <div class="tc"><div class="tc-ico"><i class="fas fa-hands-holding-heart"></i></div><div><div class="tc-n">Cuidador</div><div class="tc-r">Suporte e assistência diária</div></div></div>
+    </div>
+
+    <div class="cat-hdr up d2">Terapias e Reabilitação</div>
+    <div class="team-grid up d2">
+      <div class="tc"><div class="tc-ico"><i class="fas fa-person-walking-with-cane"></i></div><div><div class="tc-n">Fisioterapeuta</div><div class="tc-r">Reabilitação e mobilidade</div></div></div>
+      <div class="tc"><div class="tc-ico"><i class="fas fa-music"></i></div><div><div class="tc-n">Musicoterapeuta</div><div class="tc-r">Bem-estar emocional e cognitivo</div></div></div>
+      <div class="tc"><div class="tc-ico"><i class="fas fa-palette"></i></div><div><div class="tc-n">Arteterapeuta</div><div class="tc-r">Expressão criativa e terapia</div></div></div>
+      <div class="tc"><div class="tc-ico"><i class="fas fa-comment-medical"></i></div><div><div class="tc-n">Fonoaudiólogo</div><div class="tc-r">Comunicação e deglutição</div></div></div>
+    </div>
+
+    <div class="cat-hdr up d3">Saúde Mental e Bem-Estar</div>
+    <div class="team-grid up d3">
+      <div class="tc"><div class="tc-ico"><i class="fas fa-brain"></i></div><div><div class="tc-n">Psicólogo</div><div class="tc-r">Saúde emocional e mental</div></div></div>
+      <div class="tc"><div class="tc-ico"><i class="fas fa-book-open"></i></div><div><div class="tc-n">Psicopedagogo</div><div class="tc-r">Leitura e estímulo cognitivo</div></div></div>
+      <div class="tc"><div class="tc-ico"><i class="fas fa-hands-praying"></i></div><div><div class="tc-n">Capelão</div><div class="tc-r">Apoio espiritual e capelania</div></div></div>
+    </div>
+
+    <div class="cat-hdr up d4">Nutrição</div>
+    <div class="team-grid g2 up d4">
+      <div class="tc"><div class="tc-ico"><i class="fas fa-apple-whole"></i></div><div><div class="tc-n">Nutricionista</div><div class="tc-r">Alimentação balanceada e personalizada</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section id="dif" class="sec sec-alt">
+  <div class="wrap">
+    <div class="sec-hdr up">
+      <div class="eyebrow">Por que o Bem Querer?</div>
+      <h2 style="margin-top:10px;">O que nos torna <em>diferentes</em></h2>
+    </div>
+    <div class="dif-grid">
+      <div class="dif-item up d1"><div class="dif-ico"><i class="fas fa-clock"></i></div><h4>Cuidado 24 Horas</h4><p>Equipe presente em todos os momentos, com suporte ininterrupto.</p></div>
+      <div class="dif-item up d2"><div class="dif-ico"><i class="fas fa-shield-heart"></i></div><h4>Ambiente Seguro</h4><p>Estrutura adaptada, com acessibilidade e segurança em cada espaço.</p></div>
+      <div class="dif-item up d3"><div class="dif-ico"><i class="fas fa-stethoscope"></i></div><h4>Equipe Especializada</h4><p>Profissionais qualificados cuidando da saúde física e emocional.</p></div>
+      <div class="dif-item up d4"><div class="dif-ico"><i class="fas fa-utensils"></i></div><h4>Nutrição Individualizada</h4><p>Cardápio elaborado por nutricionista, adaptado a cada pessoa.</p></div>
+      <div class="dif-item up d5"><div class="dif-ico"><i class="fas fa-person-running"></i></div><h4>Atividades Terapêuticas</h4><p>Programação diária para manter corpo e mente ativos e saudáveis.</p></div>
+      <div class="dif-item up d6"><div class="dif-ico"><i class="fas fa-comments"></i></div><h4>Família Informada</h4><p>Comunicação transparente, relatórios e abertura total para visitas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria" class="sec">
+  <div class="wrap">
+    <div class="sec-hdr up">
+      <div class="eyebrow">Nossa Estrutura</div>
+      <h2 style="margin-top:10px;">Um ambiente pensado <em>para você</em></h2>
+    </div>
+    <div class="gal-grid">
+      <div class="gi"><div class="gi-ph"><i class="fas fa-camera"></i><span>Área principal</span></div></div>
+      <div class="gi"><div class="gi-ph"><i class="fas fa-camera"></i><span>Quartos</span></div></div>
+      <div class="gi"><div class="gi-ph"><i class="fas fa-camera"></i><span>Área de lazer</span></div></div>
+      <div class="gi"><div class="gi-ph"><i class="fas fa-camera"></i><span>Refeitório</span></div></div>
+      <div class="gi"><div class="gi-ph"><i class="fas fa-camera"></i><span>Jardim</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="wrap">
+    <div class="cta-eyebrow">Dê o primeiro passo</div>
+    <h2>Agende uma visita e <em>conheça pessoalmente</em></h2>
+    <p>Venha ver nossa estrutura, conhecer a equipe e descobrir por que somos a escolha certa para o seu familiar.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/5562983410308?text=Gostaria%20de%20agendar%20uma%20visita." class="btn btn-wpp" target="_blank">
+        <i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp
+      </a>
+      <a href="tel:6237029764" class="btn btn-wpp-ol">
+        <i class="fas fa-phone"></i> (62) 3702-9764
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="dep" class="sec sec-alt">
+  <div class="wrap">
+    <div class="sec-hdr up">
+      <div class="eyebrow">Depoimentos</div>
+      <h2 style="margin-top:10px;">O que as <em>famílias</em> dizem</h2>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card up d1">
+        <div class="dep-stars">★★★★★</div>
+        <span class="dep-q">"</span>
+        <p>A equipe cuida da minha mãe com atenção que raramente encontramos. Sinto paz sabendo que ela está bem assistida e feliz.</p>
+        <div class="dep-author"><div class="dep-av"><i class="fas fa-user"></i></div><div class="dep-nm"><strong>Família Silva</strong><span>Residente permanente</span></div></div>
+      </div>
+      <div class="dep-card up d2">
+        <div class="dep-stars">★★★★★</div>
+        <span class="dep-q">"</span>
+        <p>Deixamos nosso pai durante as férias e voltamos tranquilos. Estrutura excelente e comunicação muito boa com a família.</p>
+        <div class="dep-author"><div class="dep-av"><i class="fas fa-user"></i></div><div class="dep-nm"><strong>Família Oliveira</strong><span>Estadia temporária</span></div></div>
+      </div>
+      <div class="dep-card up d3">
+        <div class="dep-stars">★★★★★</div>
+        <span class="dep-q">"</span>
+        <p>Minha avó faz permanência diária e chega em casa sorrindo. As atividades fazem toda a diferença. Recomendo muito.</p>
+        <div class="dep-author"><div class="dep-av"><i class="fas fa-user"></i></div><div class="dep-nm"><strong>Família Costa</strong><span>Centro Dia</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" class="sec">
+  <div class="wrap">
+    <div class="contato-grid">
+      <div class="c-hdr up">
+        <div class="eyebrow">Contato</div>
+        <h2 style="margin-top:10px;">Venha nos <em>conhecer</em></h2>
+        <p class="sub" style="margin-top:12px;margin-bottom:28px;">Estamos prontos para receber você e sua família. Entre em contato e agende uma visita sem compromisso.</p>
+        <div class="c-list">
+          <div class="c-row">
+            <div class="c-ico ci-p"><i class="fas fa-map-marker-alt"></i></div>
+            <div><span class="c-lbl">Endereço</span><span class="c-val">Rua Hugo de Carvalho Ramos, 300 — Jundiaí, Anápolis-GO</span></div>
+          </div>
+          <a href="tel:6237029764" class="c-row">
+            <div class="c-ico ci-p"><i class="fas fa-phone"></i></div>
+            <div><span class="c-lbl">Telefone</span><span class="c-val">(62) 3702-9764</span></div>
+          </a>
+          <a href="https://wa.me/5562983410308" class="c-row" target="_blank">
+            <div class="c-ico ci-g"><i class="fab fa-whatsapp"></i></div>
+            <div><span class="c-lbl">WhatsApp</span><span class="c-val">(62) 9 8341-0308</span></div>
+          </a>
+          <a href="mailto:bemquereranapolis@gmail.com" class="c-row">
+            <div class="c-ico ci-p"><i class="fas fa-envelope"></i></div>
+            <div><span class="c-lbl">E-mail</span><span class="c-val">bemquereranapolis@gmail.com</span></div>
+          </a>
+        </div>
+      </div>
+      <div class="map-box up d2">
+        <iframe src="https://maps.google.com/maps?q=Rua+Hugo+de+Carvalho+Ramos,+300,+Jundiai,+Anapolis,+GO&output=embed"
+          allowfullscreen loading="lazy" title="Localização"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="wrap">
+    <div class="ft-grid">
+      <div class="ft-logo">
+        <img src="https://residencialbemquerer.com.br/wp-content/uploads/2021/02/asasasasas.png" alt="Residencial Bem Querer" />
+        <p>Cuidado especializado e ambiente acolhedor para a melhor idade.</p>
+        <div class="ft-socials">
+          <a href="#" class="ft-soc"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="ft-soc"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://wa.me/5562983410308" class="ft-soc" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <h5>Navegação</h5>
+        <ul class="ft-links">
+          <li><a href="#sobre">Sobre Nós</a></li>
+          <li><a href="#servicos">Modalidades</a></li>
+          <li><a href="#equipe">Equipe</a></li>
+          <li><a href="#galeria">Estrutura</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contato</h5>
+        <div class="ft-info"><i class="fas fa-map-marker-alt"></i><span>Rua Hugo de Carvalho Ramos, 300 — Anápolis-GO</span></div>
+        <div class="ft-info"><i class="fas fa-phone"></i><span>(62) 3702-9764</span></div>
+        <div class="ft-info"><i class="fab fa-whatsapp"></i><span>(62) 9 8341-0308</span></div>
+        <div class="ft-info"><i class="fas fa-envelope"></i><span>bemquereranapolis@gmail.com</span></div>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span>© 2024 Residencial Bem Querer. Todos os direitos reservados.</span>
+      <span>Anápolis — GO</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp float -->
+<a href="https://wa.me/5562983410308?text=Olá!%20Gostaria%20de%20saber%20mais." class="wpp" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+  <span>Falar agora</span>
+</a>
+
+<script>
+  const hdr = document.getElementById('hdr');
+  window.addEventListener('scroll', () => hdr.classList.toggle('on', scrollY > 40), { passive: true });
+
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } }), { threshold: 0.08 });
+  document.querySelectorAll('.up').forEach(el => obs.observe(el));
+
+  const mob = document.getElementById('mob');
+  document.getElementById('burger').onclick = () => mob.classList.add('open');
+  document.getElementById('mobClose').onclick = () => mob.classList.remove('open');
+  function closeMob() { mob.classList.remove('open'); }
+
+  window.addEventListener('scroll', () => {
+    const cur = [...document.querySelectorAll('section[id]')].reduce((a, s) => scrollY >= s.offsetTop - 120 ? s.id : a, '');
+    document.querySelectorAll('.hdr-nav a').forEach(a => {
+      const on = a.getAttribute('href') === `#${cur}`;
+      a.style.color = on ? 'var(--p)' : ''; a.style.background = on ? 'var(--p-bg)' : '';
+    });
+  }, { passive: true });
+</script>
+</body>
+</html>
