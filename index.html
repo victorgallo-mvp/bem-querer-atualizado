@@ -48,9 +48,12 @@
     #bq .hdr-wpp{display:none;align-items:center;gap:7px;background:var(--p);color:var(--white);padding:8px 16px;border-radius:50px;font-size:.78rem;font-weight:600;transition:all var(--t);}
     @media(min-width:860px){#bq .hdr-wpp{display:flex;}}
     #bq .hdr-wpp:hover{background:var(--p-dk);}
+    #bq .hdr-ig{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:var(--white);font-size:1.05rem;flex-shrink:0;transition:all var(--t);box-shadow:0 3px 10px -3px rgba(220,39,102,.5);}
+    #bq .hdr-ig:hover{transform:translateY(-1px) scale(1.06);box-shadow:0 5px 16px -3px rgba(220,39,102,.6);}
     #bq .hdr-burger{display:flex;flex-direction:column;gap:4px;cursor:pointer;background:none;border:none;padding:6px;}
     @media(min-width:860px){#bq .hdr-burger{display:none;}}
     #bq .hdr-burger span{display:block;width:20px;height:1.5px;background:var(--ink);border-radius:2px;transition:var(--t);}
+    #bq .hdr-right{display:flex;align-items:center;gap:10px;}
 
     #bq .mob{display:none;position:fixed;inset:0;z-index:850;background:var(--white);flex-direction:column;align-items:center;justify-content:center;gap:24px;}
     #bq .mob.open{display:flex;}
@@ -78,6 +81,8 @@
     #bq .btn-ol:hover{border-color:var(--p-bdr);color:var(--p);}
     #bq .btn-wpp-ol{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.5);}
     #bq .btn-wpp-ol:hover{background:rgba(255,255,255,.1);}
+    #bq .btn-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:var(--white);}
+    #bq .btn-ig:hover{transform:translateY(-1px);filter:brightness(1.06);}
     #bq .hero-stats{display:flex;gap:32px;margin-top:44px;padding-top:32px;border-top:1px solid var(--line);}
     #bq .hs-n{font-family:var(--serif);font-size:2rem;font-weight:400;display:block;color:var(--ink);line-height:1;}
     #bq .hs-l{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-top:5px;}
@@ -236,6 +241,7 @@
     #bq .c-row:hover{border-color:var(--p-bdr);background:var(--p-bg);}
     #bq .c-ico{width:36px;height:36px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;color:var(--white);}
     #bq .ci-p{background:var(--p);}#bq .ci-g{background:#22C55E;}
+    #bq .ci-ig{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
     #bq .c-lbl{font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--p);display:block;margin-bottom:1px;}
     #bq .c-val{font-size:.85rem;color:var(--ink);}
     #bq .map-box{border-radius:12px;overflow:hidden;border:1px solid var(--line);height:380px;}
@@ -280,8 +286,11 @@
         <a href="#galeria">Estrutura</a>
         <a href="#contato">Contato</a>
       </nav>
-      <a href="https://wa.me/5562983410308" class="hdr-wpp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-      <button class="hdr-burger" onClick="{{ openMenu }}" aria-label="Menu"><span></span><span></span><span></span></button>
+      <div class="hdr-right">
+        <a href="https://www.instagram.com/bemquereranapolis/" class="hdr-ig" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/5562984130308" class="hdr-wpp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        <button class="hdr-burger" onClick="{{ openMenu }}" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
     </div>
   </header>
 
@@ -292,7 +301,8 @@
     <a href="#equipe" onClick="{{ closeMenu }}">Equipe</a>
     <a href="#galeria" onClick="{{ closeMenu }}">Estrutura</a>
     <a href="#contato" onClick="{{ closeMenu }}">Contato</a>
-    <a href="https://wa.me/5562983410308" class="mob-wpp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+    <a href="https://www.instagram.com/bemquereranapolis/" onClick="{{ closeMenu }}" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+    <a href="https://wa.me/5562984130308" class="mob-wpp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
   </div>
 
   <section id="hero">
@@ -303,11 +313,11 @@
           <h1 class="hero-h1">Cuidado e carinho<br/><em>para quem você ama</em></h1>
           <p class="hero-sub">Um espaço acolhedor, seguro e profissional onde cada idoso recebe atenção especializada — e cada família vive com tranquilidade.</p>
           <div class="hero-btns">
-            <a href="https://wa.me/5562983410308?text=Olá!%20Gostaria%20de%20agendar%20uma%20visita." class="btn btn-wpp" target="_blank"><i class="fab fa-whatsapp"></i> Agendar visita</a>
+            <a href="https://wa.me/5562984130308?text=Olá!%20Gostaria%20de%20agendar%20uma%20visita." class="btn btn-wpp" target="_blank"><i class="fab fa-whatsapp"></i> Agendar visita</a>
             <a href="#sobre" class="btn btn-ol">Saiba mais</a>
           </div>
           <div class="hero-stats">
-            <div><span class="hs-n">7+</span><span class="hs-l">Anos</span></div>
+            <div><span class="hs-n">6+</span><span class="hs-l">Anos</span></div>
             <div><span class="hs-n">7</span><span class="hs-l">Especialidades</span></div>
             <div><span class="hs-n">24h</span><span class="hs-l">Atendimento</span></div>
           </div>
@@ -352,7 +362,7 @@
           <p class="sub" style="margin-top:16px;">O Residencial Bem Querer nasceu com um único propósito: oferecer aos idosos um espaço onde se sintam verdadeiramente em casa — com segurança, conforto e atenção que merecem.</p>
           <p class="sub" style="margin-top:12px;">Nossa equipe multidisciplinar trabalha de forma integrada para garantir bem-estar físico, emocional e social, mantendo sua família informada em cada etapa.</p>
           <div class="pills">
-            <span class="pill"><i class="fas fa-calendar-check" style="font-size:.65rem"></i> Desde 2019</span>
+            <span class="pill"><i class="fas fa-calendar-check" style="font-size:.65rem"></i> Desde 2020</span>
             <span class="pill"><i class="fas fa-user-doctor" style="font-size:.65rem"></i> Equipe completa</span>
             <span class="pill"><i class="fas fa-house-chimney" style="font-size:.65rem"></i> Ambiente familiar</span>
           </div>
@@ -471,8 +481,8 @@
       <h2>Agende uma visita e <em>conheça pessoalmente</em></h2>
       <p>Venha ver nossa estrutura, conhecer a equipe e descobrir por que somos a escolha certa para o seu familiar.</p>
       <div class="cta-btns">
-        <a href="https://wa.me/5562983410308?text=Gostaria%20de%20agendar%20uma%20visita." class="btn btn-wpp" target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
-        <a href="tel:6237029764" class="btn btn-wpp-ol"><i class="fas fa-phone"></i> (62) 3702-9764</a>
+        <a href="https://wa.me/5562984130308?text=Gostaria%20de%20agendar%20uma%20visita." class="btn btn-wpp" target="_blank"><i class="fab fa-whatsapp"></i> Agendar pelo WhatsApp</a>
+        <a href="https://www.instagram.com/bemquereranapolis/" class="btn btn-ig" target="_blank"><i class="fab fa-instagram"></i> Siga no Instagram</a>
       </div>
     </div>
   </section>
@@ -497,8 +507,8 @@
           <p class="sub" style="margin-top:12px;margin-bottom:28px;">Estamos prontos para receber você e sua família. Entre em contato e agende uma visita sem compromisso.</p>
           <div class="c-list">
             <div class="c-row"><div class="c-ico ci-p"><i class="fas fa-map-marker-alt"></i></div><div><span class="c-lbl">Endereço</span><span class="c-val">Rua Hugo de Carvalho Ramos, 300 — Jundiaí, Anápolis-GO</span></div></div>
-            <a href="tel:6237029764" class="c-row"><div class="c-ico ci-p"><i class="fas fa-phone"></i></div><div><span class="c-lbl">Telefone</span><span class="c-val">(62) 3702-9764</span></div></a>
-            <a href="https://wa.me/5562983410308" class="c-row" target="_blank"><div class="c-ico ci-g"><i class="fab fa-whatsapp"></i></div><div><span class="c-lbl">WhatsApp</span><span class="c-val">(62) 9 8341-0308</span></div></a>
+            <a href="https://wa.me/5562984130308" class="c-row" target="_blank"><div class="c-ico ci-g"><i class="fab fa-whatsapp"></i></div><div><span class="c-lbl">WhatsApp</span><span class="c-val">(62) 98413-0308</span></div></a>
+            <a href="https://www.instagram.com/bemquereranapolis/" class="c-row" target="_blank"><div class="c-ico ci-ig"><i class="fab fa-instagram"></i></div><div><span class="c-lbl">Instagram</span><span class="c-val">@bemquereranapolis</span></div></a>
             <a href="mailto:bemquereranapolis@gmail.com" class="c-row"><div class="c-ico ci-p"><i class="fas fa-envelope"></i></div><div><span class="c-lbl">E-mail</span><span class="c-val">bemquereranapolis@gmail.com</span></div></a>
           </div>
         </div>
@@ -516,9 +526,8 @@
           <img src="https://residencialbemquerer.com.br/wp-content/uploads/2021/02/asasasasas.png" alt="Residencial Bem Querer" />
           <p>Cuidado especializado e ambiente acolhedor para a melhor idade.</p>
           <div class="ft-socials">
-            <a href="#" class="ft-soc"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="ft-soc"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://wa.me/5562983410308" class="ft-soc" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.instagram.com/bemquereranapolis/" class="ft-soc" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/5562984130308" class="ft-soc" target="_blank"><i class="fab fa-whatsapp"></i></a>
           </div>
         </div>
         <div class="ft-col">
@@ -534,19 +543,19 @@
         <div class="ft-col">
           <h5>Contato</h5>
           <div class="ft-info"><i class="fas fa-map-marker-alt"></i><span>Rua Hugo de Carvalho Ramos, 300 — Anápolis-GO</span></div>
-          <div class="ft-info"><i class="fas fa-phone"></i><span>(62) 3702-9764</span></div>
-          <div class="ft-info"><i class="fab fa-whatsapp"></i><span>(62) 9 8341-0308</span></div>
+          <div class="ft-info"><i class="fab fa-whatsapp"></i><span>(62) 98413-0308</span></div>
+          <div class="ft-info"><i class="fab fa-instagram"></i><span>@bemquereranapolis</span></div>
           <div class="ft-info"><i class="fas fa-envelope"></i><span>bemquereranapolis@gmail.com</span></div>
         </div>
       </div>
       <div class="ft-bot">
-        <span>© 2024 Residencial Bem Querer. Todos os direitos reservados.</span>
+        <span>© 2026 Residencial Bem Querer. Todos os direitos reservados.</span>
         <span>Anápolis — GO</span>
       </div>
     </div>
   </footer>
 
-  <a href="https://wa.me/5562983410308?text=Olá!%20Gostaria%20de%20saber%20mais." class="wpp" target="_blank"><i class="fab fa-whatsapp"></i><span>Falar agora</span></a>
+  <a href="https://wa.me/5562984130308?text=Olá!%20Gostaria%20de%20saber%20mais." class="wpp" target="_blank"><i class="fab fa-whatsapp"></i><span>Falar agora</span></a>
 
   <sc-if value="{{ lbOpen }}">
     <div class="lb" onClick="{{ closeLb }}">
