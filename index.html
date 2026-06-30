@@ -232,6 +232,17 @@
     #bq .dep-nm strong{font-size:.8rem;font-weight:600;display:block;}
     #bq .dep-nm span{font-size:.7rem;color:var(--muted);}
 
+    #bq .faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+    #bq .faq-item{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--white);transition:border-color var(--t);}
+    #bq .faq-item.open{border-color:var(--p-bdr);}
+    #bq .faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;background:none;border:none;cursor:pointer;text-align:left;font-family:var(--serif);font-size:1.08rem;font-weight:400;color:var(--ink);transition:color var(--t);}
+    #bq .faq-q:hover{color:var(--p);}
+    #bq .faq-ico{font-size:.8rem;color:var(--p);flex-shrink:0;transition:transform var(--t);}
+    #bq .faq-item.open .faq-ico{transform:rotate(45deg);}
+    #bq .faq-a{max-height:0;overflow:hidden;transition:max-height .38s ease;}
+    #bq .faq-item.open .faq-a{max-height:360px;}
+    #bq .faq-a p{padding:0 22px 20px;font-size:.88rem;line-height:1.75;color:var(--mid);font-weight:300;}
+
     #bq .contato-grid{display:grid;grid-template-columns:1fr;gap:40px;}
     @media(min-width:768px){#bq .contato-grid{grid-template-columns:1fr 1.3fr;gap:60px;align-items:start;}}
     #bq .c-hdr h2{margin-bottom:12px;}
@@ -284,6 +295,7 @@
         <a href="#servicos">Serviços</a>
         <a href="#equipe">Equipe</a>
         <a href="#galeria">Estrutura</a>
+        <a href="#faq">FAQ</a>
         <a href="#contato">Contato</a>
       </nav>
       <div class="hdr-right">
@@ -300,6 +312,7 @@
     <a href="#servicos" onClick="{{ closeMenu }}">Serviços</a>
     <a href="#equipe" onClick="{{ closeMenu }}">Equipe</a>
     <a href="#galeria" onClick="{{ closeMenu }}">Estrutura</a>
+    <a href="#faq" onClick="{{ closeMenu }}">FAQ</a>
     <a href="#contato" onClick="{{ closeMenu }}">Contato</a>
     <a href="https://www.instagram.com/bemquereranapolis/" onClick="{{ closeMenu }}" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
     <a href="https://wa.me/5562984130308" class="mob-wpp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
@@ -498,6 +511,20 @@
     </div>
   </section>
 
+  <section id="faq" class="sec sec-alt">
+    <div class="wrap">
+      <div class="sec-hdr up"><div class="eyebrow">Perguntas Frequentes</div><h2 style="margin-top:10px;">Tire suas <em>dúvidas</em></h2></div>
+      <div class="faq-list up d1">
+        <sc-for list="{{ faqItems }}" as="f" hint-placeholder-count="6">
+          <div class="{{ f.cls }}">
+            <button class="faq-q" onClick="{{ f.open }}"><span>{{ f.q }}</span><i class="fas fa-plus faq-ico"></i></button>
+            <div class="faq-a"><p>{{ f.a }}</p></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
   <section id="contato" class="sec">
     <div class="wrap">
       <div class="contato-grid">
@@ -583,7 +610,7 @@
   &quot;accentColor&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#8B6EC8&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;options&quot;: [&quot;#8B6EC8&quot;, &quot;#A86BB0&quot;, &quot;#6E86C8&quot;, &quot;#C88B6E&quot;] }
 }">
 class Component extends DCLogic {
-  state = { filter: 'todas', lbOpen: false, lbIndex: 0, menu: false };
+  state = { filter: 'todas', lbOpen: false, lbIndex: 0, menu: false, faq: null };
 
   photos = [
     { src: 'photos/roda-de-conversa.jpg', cat: 'atividades', label: 'Roda de conversa', tall: false },
@@ -605,6 +632,17 @@ class Component extends DCLogic {
     { src: 'photos/banho-acessivel.jpg', cat: 'acomodacoes', label: 'Banho acessível', tall: false },
   ];
 
+  faqs = [
+    { q: 'Quais modalidades de hospedagem vocês oferecem?', a: 'Trabalhamos com três modalidades: hospedagem permanente (moradia de longa permanência), hospedagem temporária (por período determinado, como viagens ou recuperação pós-cirúrgica) e Centro Dia (o idoso passa o dia conosco e volta para casa à noite). Em todas, o cuidado e as atividades são os mesmos.' },
+    { q: 'O que está incluso na hospedagem?', a: 'Na hospedagem permanente estão inclusos assistência de enfermagem 24h, acompanhamento com médico geriatra, nutrição, terapias, lavanderia e enxoval fornecido pela instituição. Podemos detalhar tudo durante uma visita.' },
+    { q: 'Como funciona a visita de familiares?', a: 'A família tem total abertura para visitar. Prezamos por comunicação transparente e mantemos os familiares informados sobre o bem-estar do idoso. Combine o melhor horário pelo WhatsApp.' },
+    { q: 'Como é a equipe que cuida dos idosos?', a: 'Contamos com uma equipe multidisciplinar: médico geriatra, técnicos de enfermagem 24h, cuidadores, fisioterapeuta, nutricionista, psicólogo, fonoaudiólogo, além de profissionais de terapias e apoio espiritual.' },
+    { q: 'Qual o horário do Centro Dia?', a: 'A entrada é entre 07h e 08h e a saída entre 18h30 e 19h30. Durante o dia, o idoso participa de terapias e atividades que estimulam saúde física, emocional, cognitiva e social.' },
+    { q: 'Quais documentos são necessários para a admissão?', a: 'Geralmente solicitamos documentos pessoais do idoso, relatório/receituário médico atualizado e exames recentes. Como cada caso é avaliado individualmente, entre em contato pelo WhatsApp que orientamos você em cada etapa.' },
+    { q: 'Quais são os valores?', a: 'Os valores variam conforme a modalidade e o grau de cuidado necessário. Fale com a gente pelo WhatsApp para receber uma proposta personalizada e agendar uma visita sem compromisso.' },
+    { q: 'Como faço para agendar uma visita?', a: 'É só chamar no WhatsApp (62) 98413-0308 ou clicar em "Agendar visita". Será um prazer receber você e sua família para conhecer nossa estrutura e equipe pessoalmente.' },
+  ];
+
   cats = [
     { key: 'todas', label: 'Todas' },
     { key: 'acomodacoes', label: 'Acomodações' },
@@ -621,6 +659,7 @@ class Component extends DCLogic {
   }
 
   setFilter = (k) => this.setState({ filter: k });
+  toggleFaq = (i) => this.setState(s => ({ faq: s.faq === i ? null : i }));
   openLb = (i) => this.setState({ lbOpen: true, lbIndex: i });
   closeLb = () => this.setState({ lbOpen: false });
   stop = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
@@ -697,6 +736,12 @@ class Component extends DCLogic {
       cls: 'chip' + (this.state.filter === c.key ? ' on' : ''),
       onClick: () => this.setFilter(c.key),
     }));
+    const faqItems = this.faqs.map((f, i) => ({
+      q: f.q,
+      a: f.a,
+      cls: 'faq-item' + (this.state.faq === i ? ' open' : ''),
+      open: () => this.toggleFaq(i),
+    }));
     const withSrc = this.photos.filter(p => p.src);
     const half = Math.ceil(withSrc.length / 2);
     const setA = withSrc.slice(0, half);
@@ -709,6 +754,7 @@ class Component extends DCLogic {
     return {
       galleryPhotos,
       chips,
+      faqItems,
       marqueeA,
       marqueeB,
       heroPhoto,
