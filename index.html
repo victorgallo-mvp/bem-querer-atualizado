@@ -189,7 +189,6 @@
     #bq .marquee-row+.marquee-row{margin-top:14px;}
     #bq .mq-a{animation:mqleft 70s linear infinite;}
     #bq .mq-b{animation:mqright 62s linear infinite;}
-    #bq .marquee-sec:hover .marquee-row{animation-play-state:paused;}
     #bq .mq-item{height:188px;aspect-ratio:3/2;border-radius:12px;overflow:hidden;flex-shrink:0;box-shadow:0 12px 30px -18px rgba(80,60,130,.5);}
     #bq .mq-item img{width:100%;height:100%;object-fit:cover;display:block;}
     @media(min-width:768px){#bq .mq-item{height:232px;}}
@@ -703,6 +702,20 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onScroll, { passive: true });
 
+    // carrossel: desacelera (em vez de pausar) ao passar o mouse — muda só a
+    // velocidade via playbackRate, então não há "pulo" na posição da imagem
+    const mqSec = this.root() && this.root().querySelector('.marquee-sec');
+    if (mqSec) {
+      const setRate = (r) => mqSec.querySelectorAll('.marquee-row').forEach(row => {
+        if (row.getAnimations) row.getAnimations().forEach(a => { a.playbackRate = r; });
+      });
+      this._mqEnter = () => setRate(0.2);
+      this._mqLeave = () => setRate(1);
+      mqSec.addEventListener('mouseenter', this._mqEnter);
+      mqSec.addEventListener('mouseleave', this._mqLeave);
+      this._mqSec = mqSec;
+    }
+
     // keyboard for lightbox
     this._onKey = (e) => {
       if (!this.state.lbOpen) return;
@@ -718,6 +731,10 @@ class Component extends DCLogic {
   componentWillUnmount() {
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('keydown', this._onKey);
+    if (this._mqSec) {
+      this._mqSec.removeEventListener('mouseenter', this._mqEnter);
+      this._mqSec.removeEventListener('mouseleave', this._mqLeave);
+    }
   }
 
   renderVals() {
